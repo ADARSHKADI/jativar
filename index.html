@@ -194,7 +194,7 @@ async function confirmAndSave() {
   if (!document.getElementById('confirmTick').checked || busy) return;
   closeConfirmation();
   setBusy(true);
-  showLoader(true, 'માહિતી Google Sheet માં સેવ થઈ રહી છે...');
+  showLoader(true, 'માહિતી સેવ થઈ રહી છે...કૃપયા કરી રાહ જુઓ ');
   showMsg('', false);
   const payload = {
     std: document.getElementById('std').value,
