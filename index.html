@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>જાતિવાર વિદ્યાર્થી સંખ્યા એન્ટ્રી ફોર્મ</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f3f6fb;margin:0;padding:14px;color:#243247}
+.card{max-width:850px;margin:18px auto;background:#fff;padding:24px;border-radius:18px;box-shadow:0 6px 22px rgba(0,0,0,.10)}
+h2,h3,h4{text-align:center;margin:8px 0;color:#203654}
+h2{font-size:25px} h3{font-size:28px} h4{font-size:20px;color:#267443}
+.instructions{font-size:16px;line-height:1.7;color:#267443;background:#f1faf3;padding:12px 18px;border-radius:10px}
+.field{display:flex;align-items:center;gap:14px;margin:13px 0}
+.field label{width:32%;font-weight:700;font-size:18px}
+.field input,.field select{width:68%;padding:13px;border:1px solid #cbd5e1;border-radius:9px;font-size:18px;background:white}
+.field input:focus,.field select:focus{outline:2px solid #b9dfc3;border-color:#29934b}
+button{border:0;border-radius:10px;padding:14px 18px;font-size:17px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+.secondary{width:100%;background:#e8f1ff;color:#1556a0;margin:8px 0}
+.submit-btn{width:100%;background:#218838;color:white;margin-top:14px}
+.msg{text-align:center;font-weight:700;margin-top:14px;font-size:17px}
+.error{color:#c62828}.success{color:#188038}
+#loader{position:fixed;inset:0;background:rgba(255,255,255,.78);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:1000}
+.loader-box{background:#fff;padding:28px 36px;border-radius:16px;box-shadow:0 8px 30px #0002;text-align:center;font-size:18px;font-weight:700}
+.spinner{width:48px;height:48px;border:5px solid #e2e8f0;border-top-color:#218838;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.modal-backdrop{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:16px;z-index:1100}
+.modal{width:100%;max-width:440px;background:#fff;border-radius:16px;padding:22px;box-shadow:0 10px 35px #0004}
+.modal h3{margin:0 0 16px}
+.summary{background:#f4f7fb;border-radius:10px;padding:12px 16px;margin:12px 0}
+.summary-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #e2e8f0;font-size:18px}
+.summary-row:last-child{border:0;font-weight:800;font-size:20px}
+.confirm-check{display:flex;align-items:flex-start;gap:10px;margin:16px 0;font-size:16px;line-height:1.5}
+.confirm-check input{width:21px;height:21px;flex:none;margin-top:2px}
+.modal-actions{display:flex;gap:10px}
+.modal-actions button{flex:1}
+.cancel-btn{background:#e9edf3;color:#263548}
+.confirm-btn{background:#218838;color:white}
+@media(max-width:600px){
+ body{padding:7px}.card{padding:16px 13px;margin:7px auto;border-radius:12px}
+ h2{font-size:21px}h3{font-size:22px}h4{font-size:18px}
+ .field{display:block;margin:12px 0}.field label{display:block;width:100%;font-size:16px;margin-bottom:6px}
+ .field input,.field select{width:100%;font-size:17px;padding:12px}
+ .instructions{font-size:14px;padding:10px 12px}
+ button{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div id="loader"><div class="loader-box"><div class="spinner"></div><div id="loaderText">માહિતી લોડ થઈ રહી છે...</div></div></div>
+
+<div class="card">
+  <h2>જાતિવાર વિદ્યાર્થી સંખ્યા એન્ટ્રી ફોર્મ</h2>
+  <h3>પી.એમ.જી. ઠાકર આદર્શ હાઈસ્કૂલ, કડી</h3>
+  <h4 id="monthTitle">ચાલુ મહિનાની માહિતી</h4>
+  <ul class="instructions">
+    <li>જે વર્ગની એન્ટ્રી થઈ ગયેલ હશે તેની સામે ✓ દેખાશે.</li>
+    <li>બધા ખાનામાં માહિતી ભરવી ફરજિયાત છે.</li>
+    <li>Submit કરતા પહેલાં કુલ સંખ્યા ચકાસવી જરૂરી છે.</li>
+  </ul>
+
+  <div class="field"><label for="std">STD</label><select id="std"><option value="">પસંદ કરો</option></select></div>
+  <div class="field"><label for="class">CLASS</label><select id="class"><option value="">પહેલાં STD પસંદ કરો</option></select></div>
+
+  <button type="button" id="previousBtn" class="secondary" style="display:none">⬇️ પાછલા મહિનાની માહિતી લાવો</button>
+
+  <div class="field"><label for="scb">SC કુમાર</label><input type="number" id="scb" min="0" step="1" inputmode="numeric"></div>
+  <div class="field"><label for="scg">SC કન્યા</label><input type="number" id="scg" min="0" step="1" inputmode="numeric"></div>
+  <div class="field"><label for="stb">ST કુમાર</label><input type="number" id="stb" min="0" step="1" inputmode="numeric"></div>
+  <div class="field"><label for="stg">ST કન્યા</label><input type="number" id="stg" min="0" step="1" inputmode="numeric"></div>
+  <div class="field"><label for="obcb">OBC કુમાર</label><input type="number" id="obcb" min="0" step="1" inputmode="numeric"></div>
+  <div class="field"><label for="obcg">OBC કન્યા</label><input type="number" id="obcg" min="0" step="1" inputmode="numeric"></div>
+  <div class="field"><label for="minb">MIN કુમાર</label><input type="number" id="minb" min="0" step="1" inputmode="numeric"></div>
+  <div class="field"><label for="ming">MIN કન્યા</label><input type="number" id="ming" min="0" step="1" inputmode="numeric"></div>
+  <div class="field"><label for="genb">GEN કુમાર</label><input type="number" id="genb" min="0" step="1" inputmode="numeric"></div>
+  <div class="field"><label for="geng">GEN કન્યા</label><input type="number" id="geng" min="0" step="1" inputmode="numeric"></div>
+
+  <div id="msg" class="msg"></div>
+  <button type="button" class="submit-btn" id="submitBtn">✅ Submit</button>
+</div>
+
+<div class="modal-backdrop" id="confirmBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <h3 id="confirmTitle">માહિતી કન્ફર્મ કરો</h3>
+    <div class="summary">
+      <div class="summary-row"><span>કુલ કુમાર</span><strong id="totalBoys">0</strong></div>
+      <div class="summary-row"><span>કુલ કન્યા</span><strong id="totalGirls">0</strong></div>
+      <div class="summary-row"><span>કુલ વિદ્યાર્થીઓ</span><strong id="grandTotal">0</strong></div>
+    </div>
+    <label class="confirm-check"><input type="checkbox" id="confirmTick"><span>મેં ઉપર દર્શાવેલ કુલ સંખ્યા ચકાસી છે અને માહિતી સાચી છે.</span></label>
+    <div class="modal-actions">
+      <button type="button" class="cancel-btn" id="cancelConfirm">રદ કરો</button>
+      <button type="button" class="confirm-btn" id="confirmSubmit" disabled>✓ કન્ફર્મ કરો</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/*
+ * IMPORTANT:
+ * Paste your deployed Google Apps Script Web App URL below.
+ * The Google Sheet remains the database. This HTML is hosted on GitHub Pages.
+ */
+const API_URL = "https://script.google.com/macros/s/AKfycbxnvnA3ILdi-gCyabpTLYjEsM1DldzpkEjXGVYgKxxMcj9QTztqvWl2dlZv1YB1ofbX/exec";
+
+const fieldIds = ['scb','scg','stb','stg','obcb','obcg','minb','ming','genb','geng'];
+let filledMap = {};
+let busy = false;
+
+function showLoader(show, text) {
+  document.getElementById('loaderText').textContent = text || 'માહિતી લોડ થઈ રહી છે...';
+  document.getElementById('loader').style.display = show ? 'flex' : 'none';
+}
+function showMsg(message, isError) {
+  const el = document.getElementById('msg');
+  el.textContent = message;
+  el.className = 'msg ' + (isError ? 'error' : 'success');
+}
+function cleanClass(value) { return String(value || '').replace('✓','').trim(); }
+function selectedClass() { return cleanClass(document.getElementById('class').value); }
+function setBusy(value) {
+  busy = value;
+  document.getElementById('submitBtn').disabled = value;
+  document.getElementById('previousBtn').disabled = value;
+}
+
+function api(action, params = {}) {
+  return new Promise((resolve, reject) => {
+    if (!API_URL || API_URL.includes('PASTE_YOUR')) {
+      reject(new Error('HTML માં API_URL માં Apps Script Web App URL નાખો.'));
+      return;
+    }
+    const callback = 'gas_cb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
+    const script = document.createElement('script');
+    const query = new URLSearchParams({action, callback, ...params});
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error('સર્વર તરફથી જવાબ મળ્યો નથી. ફરી પ્રયાસ કરો.'));
+    }, 25000);
+    function cleanup() {
+      clearTimeout(timer);
+      delete window[callback];
+      script.remove();
+    }
+    window[callback] = (response) => {
+      cleanup();
+      if (response && response.ok) resolve(response.data);
+      else reject(new Error(response && response.error ? response.error : 'અજાણી ભૂલ'));
+    };
+    script.onerror = () => { cleanup(); reject(new Error('Google Apps Script સાથે કનેક્શન થઈ શક્યું નથી.')); };
+    script.src = API_URL + (API_URL.includes('?') ? '&' : '?') + query.toString();
+    document.body.appendChild(script);
+  });
+}
+
+function totalsFromForm() {
+  const boys = ['scb','stb','obcb','minb','genb'].reduce((s,id)=>s+Number(document.getElementById(id).value || 0),0);
+  const girls = ['scg','stg','obcg','ming','geng'].reduce((s,id)=>s+Number(document.getElementById(id).value || 0),0);
+  return {boys, girls, total: boys + girls};
+}
+function validateForm() {
+  const ids = ['std','class',...fieldIds];
+  for (const id of ids) {
+    const el = document.getElementById(id);
+    if (el.value === '') {
+      showMsg('❌ બધા ખાનામાં માહિતી ભરો.', true);
+      el.focus();
+      el.scrollIntoView({behavior:'smooth',block:'center'});
+      return false;
+    }
+    if (id !== 'std' && id !== 'class' && (!Number.isInteger(Number(el.value)) || Number(el.value) < 0)) {
+      showMsg('❌ સંખ્યા 0 અથવા તેનાથી મોટી પૂર્ણાંક હોવી જોઈએ.', true);
+      el.focus();
+      return false;
+    }
+  }
+  return true;
+}
+function openConfirmation() {
+  if (busy || !validateForm()) return;
+  const t = totalsFromForm();
+  document.getElementById('totalBoys').textContent = t.boys;
+  document.getElementById('totalGirls').textContent = t.girls;
+  document.getElementById('grandTotal').textContent = t.total;
+  document.getElementById('confirmTick').checked = false;
+  document.getElementById('confirmSubmit').disabled = true;
+  document.getElementById('confirmBackdrop').style.display = 'flex';
+}
+function closeConfirmation() {
+  document.getElementById('confirmBackdrop').style.display = 'none';
+}
+async function confirmAndSave() {
+  if (!document.getElementById('confirmTick').checked || busy) return;
+  closeConfirmation();
+  setBusy(true);
+  showLoader(true, 'માહિતી Google Sheet માં સેવ થઈ રહી છે...');
+  showMsg('', false);
+  const payload = {
+    std: document.getElementById('std').value,
+    class: selectedClass()
+  };
+  fieldIds.forEach(id => payload[id] = document.getElementById(id).value);
+  try {
+    await api('save', {data: JSON.stringify(payload)});
+    showMsg('✅ માહિતી સફળતાપૂર્વક સેવ / અપડેટ થઈ ગઈ.', false);
+    filledMap = await api('filled');
+    refreshClassLabels();
+  } catch (err) {
+    showMsg('❌ ' + err.message, true);
+  } finally {
+    showLoader(false);
+    setBusy(false);
+  }
+}
+function refreshClassLabels() {
+  const std = document.getElementById('std').value;
+  const sel = document.getElementById('class');
+  Array.from(sel.options).forEach(opt => {
+    if (!opt.value) return;
+    const name = cleanClass(opt.value);
+    opt.textContent = filledMap[std + '_' + name] ? name + ' ✓' : name;
+  });
+}
+async function loadStd() {
+  showLoader(true, 'ધોરણની યાદી લોડ થઈ રહી છે...');
+  try {
+    const [list, filled] = await Promise.all([api('std'), api('filled')]);
+    filledMap = filled || {};
+    const s = document.getElementById('std');
+    s.innerHTML = '<option value="">પસંદ કરો</option>';
+    list.forEach(v => s.add(new Option(v, v)));
+  } catch(err) { showMsg('❌ ' + err.message, true); }
+  finally { showLoader(false); }
+}
+async function loadClasses() {
+  const std = document.getElementById('std').value;
+  const c = document.getElementById('class');
+  c.innerHTML = '<option value="">પસંદ કરો</option>';
+  clearBoxes();
+  document.getElementById('previousBtn').style.display = 'none';
+  if (!std) return;
+  showLoader(true, 'વર્ગની યાદી લોડ થઈ રહી છે...');
+  try {
+    const list = await api('classes', {std});
+    list.forEach(v => c.add(new Option(v, v)));
+    refreshClassLabels();
+  } catch(err) { showMsg('❌ ' + err.message, true); }
+  finally { showLoader(false); }
+}
+async function loadCurrentData() {
+  const std = document.getElementById('std').value;
+  const cls = selectedClass();
+  clearBoxes();
+  document.getElementById('previousBtn').style.display = (std && cls) ? 'block' : 'none';
+  if (!std || !cls) return;
+  showLoader(true, 'આ મહિનાની સેવ કરેલી માહિતી તપાસી રહ્યા છીએ...');
+  try {
+    const data = await api('current', {std, cls});
+    if (data) fillBoxes(data);
+  } catch(err) { showMsg('❌ ' + err.message, true); }
+  finally { showLoader(false); }
+}
+async function loadPreviousData() {
+  const std = document.getElementById('std').value;
+  const cls = selectedClass();
+  if (!std || !cls || busy) return;
+  showLoader(true, 'પાછલા મહિનાની માહિતી લાવી રહ્યા છીએ...');
+  try {
+    const data = await api('previous', {std, cls});
+    if (!data) {
+      showMsg('⚠️ Last શીટમાં આ ધોરણ / વર્ગની માહિતી મળી નથી.', true);
+      return;
+    }
+    fillBoxes(data);
+    showMsg('✅ પાછલા મહિનાની માહિતી બોક્સમાં આવી ગઈ છે. ચકાસીને Submit કરો.', false);
+  } catch(err) { showMsg('❌ ' + err.message, true); }
+  finally { showLoader(false); }
+}
+function fillBoxes(data) {
+  fieldIds.forEach(id => document.getElementById(id).value = (data[id] ?? '') === null ? '' : (data[id] ?? ''));
+}
+function clearBoxes() { fieldIds.forEach(id => document.getElementById(id).value = ''); }
+
+document.getElementById('std').addEventListener('change', loadClasses);
+document.getElementById('class').addEventListener('change', loadCurrentData);
+document.getElementById('previousBtn').addEventListener('click', loadPreviousData);
+document.getElementById('submitBtn').addEventListener('click', openConfirmation);
+document.getElementById('cancelConfirm').addEventListener('click', closeConfirmation);
+document.getElementById('confirmTick').addEventListener('change', e => {
+  document.getElementById('confirmSubmit').disabled = !e.target.checked;
+});
+document.getElementById('confirmSubmit').addEventListener('click', confirmAndSave);
+document.getElementById('confirmBackdrop').addEventListener('click', e => {
+  if (e.target.id === 'confirmBackdrop') closeConfirmation();
+});
+window.addEventListener('load', loadStd);
+</script>
+</body>
+</html>
