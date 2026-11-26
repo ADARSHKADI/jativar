@@ -5,46 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>જાતિવાર વિદ્યાર્થી સંખ્યા એન્ટ્રી ફોર્મ</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@400;500;600;700;800&display=swap');
+:root{--ink:#172b4d;--green:#176b52;--line:#dbe6e3}
 *{box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#f3f6fb;margin:0;padding:14px;color:#243247}
-.card{max-width:850px;margin:18px auto;background:#fff;padding:24px;border-radius:18px;box-shadow:0 6px 22px rgba(0,0,0,.10)}
-h2,h3,h4{text-align:center;margin:8px 0;color:#203654}
-h2{font-size:25px} h3{font-size:28px} h4{font-size:20px;color:#267443}
-.instructions{font-size:16px;line-height:1.7;color:#267443;background:#f1faf3;padding:12px 18px;border-radius:10px}
-.field{display:flex;align-items:center;gap:14px;margin:13px 0}
-.field label{width:32%;font-weight:700;font-size:18px}
-.field input,.field select{width:68%;padding:13px;border:1px solid #cbd5e1;border-radius:9px;font-size:18px;background:white}
-.field input:focus,.field select:focus{outline:2px solid #b9dfc3;border-color:#29934b}
-button{border:0;border-radius:10px;padding:14px 18px;font-size:17px;font-weight:700;cursor:pointer}
-button:disabled{opacity:.55;cursor:not-allowed}
-.secondary{width:100%;background:#e8f1ff;color:#1556a0;margin:8px 0}
-.submit-btn{width:100%;background:#218838;color:white;margin-top:14px}
-.msg{text-align:center;font-weight:700;margin-top:14px;font-size:17px}
-.error{color:#c62828}.success{color:#188038}
-#loader{position:fixed;inset:0;background:rgba(255,255,255,.78);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:1000}
-.loader-box{background:#fff;padding:28px 36px;border-radius:16px;box-shadow:0 8px 30px #0002;text-align:center;font-size:18px;font-weight:700}
-.spinner{width:48px;height:48px;border:5px solid #e2e8f0;border-top-color:#218838;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.modal-backdrop{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:16px;z-index:1100}
-.modal{width:100%;max-width:440px;background:#fff;border-radius:16px;padding:22px;box-shadow:0 10px 35px #0004}
-.modal h3{margin:0 0 16px}
-.summary{background:#f4f7fb;border-radius:10px;padding:12px 16px;margin:12px 0}
-.summary-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #e2e8f0;font-size:18px}
-.summary-row:last-child{border:0;font-weight:800;font-size:20px}
-.confirm-check{display:flex;align-items:flex-start;gap:10px;margin:16px 0;font-size:16px;line-height:1.5}
-.confirm-check input{width:21px;height:21px;flex:none;margin-top:2px}
-.modal-actions{display:flex;gap:10px}
-.modal-actions button{flex:1}
-.cancel-btn{background:#e9edf3;color:#263548}
-.confirm-btn{background:#218838;color:white}
-@media(max-width:600px){
- body{padding:7px}.card{padding:16px 13px;margin:7px auto;border-radius:12px}
- h2{font-size:21px}h3{font-size:22px}h4{font-size:18px}
- .field{display:block;margin:12px 0}.field label{display:block;width:100%;font-size:16px;margin-bottom:6px}
- .field input,.field select{width:100%;font-size:17px;padding:12px}
- .instructions{font-size:14px;padding:10px 12px}
- button{font-size:16px}
+html{min-height:100%;background:#edf4f3}
+body{min-height:100vh;margin:0;padding:32px 18px 48px;font-family:'Hind Vadodara','Noto Sans Gujarati',Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 8% 12%,#52be9d3d,transparent 28%),radial-gradient(circle at 92% 18%,#6699dd33,transparent 30%),linear-gradient(135deg,#eef6f4,#f4f6fc 48%,#edf3f9);background-attachment:fixed}
+.card{width:min(100%,900px);margin:0 auto;padding:clamp(20px,4vw,42px);border:1px solid #ffffffd9;border-radius:28px;background:#fffffff0;backdrop-filter:blur(18px);box-shadow:0 22px 60px #17373024;position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;left:0;right:0;top:0;height:7px;background:linear-gradient(90deg,#176b52,#42b88a,#78a9e8,#176b52)}
+h2,h3,h4{text-align:center;margin:8px 0;color:var(--ink);line-height:1.35}
+h2{font-size:clamp(22px,3vw,30px);font-weight:800}h3{font-size:clamp(22px,3.2vw,30px);font-weight:800;color:#155b48}
+h4{display:table;margin:12px auto 22px;padding:7px 19px;border-radius:999px;background:#e7f6ef;color:#176b52;font-size:clamp(15px,2vw,19px);font-weight:700}
+.instructions{margin:20px 0 25px;padding:15px 20px 15px 40px;border:1px solid #d9eee4;border-radius:16px;background:linear-gradient(120deg,#f0faf5,#f4f8ff);color:#28634f;font-size:16px;line-height:1.8}
+.selection-grid,.fields-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.field{display:flex;flex-direction:column;align-items:stretch;gap:8px;min-width:0;margin:0 0 15px;padding:14px 15px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#fff,#f9fcfb);box-shadow:0 4px 14px #1940360b;transition:.2s}
+.field:focus-within{border-color:#63b99a;box-shadow:0 0 0 4px #30a0751c,0 8px 20px #19403612;transform:translateY(-1px)}
+.field label{width:100%;font-size:16px;font-weight:800;color:#365b53;display:flex;align-items:center;gap:8px}
+.field label:before{content:"";width:7px;height:7px;flex:none;border-radius:50%;background:linear-gradient(135deg,#16845f,#67c69e);box-shadow:0 0 0 3px #e6f5ee}
+.field input,.field select{width:100%;min-width:0;min-height:50px;padding:12px 14px;border:1.5px solid #d8e3e0;border-radius:11px;background:#fff;color:#1c3348;font:600 18px 'Hind Vadodara','Noto Sans Gujarati',Arial,sans-serif;outline:none;transition:.2s}
+.field input:hover,.field select:hover{border-color:#9dc9b8}
+.field input:focus,.field select:focus{border-color:#23966b;box-shadow:0 0 0 4px #23966b1f;background:#fcfffd}
+button{border:0;border-radius:13px;padding:14px 20px;min-height:50px;font:700 16px 'Hind Vadodara','Noto Sans Gujarati',Arial,sans-serif;cursor:pointer;transition:transform .18s,box-shadow .18s,filter .18s,opacity .18s}
+button:not(:disabled):hover{transform:translateY(-2px);filter:brightness(1.035)}button:not(:disabled):active{transform:scale(.99)}button:disabled{opacity:.48;cursor:not-allowed;box-shadow:none}
+.secondary{width:100%;margin:8px 0 20px;color:#145c91;background:linear-gradient(115deg,#e7f3ff,#edf4ff);border:1px solid #cfe2f7;box-shadow:0 7px 18px #2768a517}
+.submit-btn{width:100%;margin-top:16px;color:#fff;background:linear-gradient(110deg,#14664e,#239b70 58%,#35ad82);box-shadow:0 12px 25px #187e583b;font-size:19px;letter-spacing:.2px}
+.msg{min-height:24px;text-align:center;font-weight:700;margin-top:14px;font-size:16px}.error{color:#c62828}.success{color:#16804d}
+#loader{position:fixed;inset:0;background:#0e202b6b;backdrop-filter:blur(9px);display:none;align-items:center;justify-content:center;z-index:1000;padding:18px}
+.loader-box{width:min(88vw,340px);padding:30px 26px 27px;border:1px solid #ffffffcc;border-radius:24px;background:linear-gradient(145deg,#fff,#f0faf6);box-shadow:0 24px 70px #07272047;text-align:center;color:#205a49;font-size:17px;font-weight:800}
+.spinner{position:relative;width:76px;height:76px;margin:0 auto 19px;border-radius:50%;border:2px solid #1f8b6321;background:radial-gradient(circle,#e7f8ef 0 27%,transparent 29%);animation:corePulse 1.7s ease-in-out infinite}
+.spinner:before{content:"";position:absolute;inset:7px;border-radius:50%;border:3px solid transparent;border-top-color:#167653;border-right-color:#53b98d;animation:spinOrbit .95s cubic-bezier(.6,.1,.3,.9) infinite}
+.spinner:after{content:"";position:absolute;width:13px;height:13px;left:50%;top:-3px;margin-left:-6.5px;border-radius:50%;background:#49b98a;box-shadow:0 0 0 5px #49b98a29,0 0 18px #49b98acc;transform-origin:6.5px 41px;animation:dotOrbit 1.8s linear infinite}
+@keyframes spinOrbit{to{transform:rotate(360deg)}}@keyframes dotOrbit{to{transform:rotate(360deg)}}@keyframes corePulse{0%,100%{transform:scale(.96)}50%{transform:scale(1.04);filter:drop-shadow(0 0 12px #36af7f40)}}
+.modal-backdrop{position:fixed;inset:0;background:#0c1c2694;backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:16px;z-index:1100}
+.modal{width:100%;max-width:460px;padding:25px;border:1px solid #ffffffd9;border-radius:23px;background:linear-gradient(150deg,#fff,#f5faf8);box-shadow:0 25px 70px #0004;animation:modalIn .22s ease-out}
+@keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.modal h3{margin:0 0 17px;font-size:24px}.summary{margin:14px 0;padding:13px 17px;border:1px solid #e0ece7;border-radius:15px;background:linear-gradient(135deg,#f1faf5,#f3f7ff)}
+.summary-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #e0eae6;font-size:18px;color:#45635b}
+.summary-row strong{font-size:21px;color:#176b52;font-weight:800}.summary-row:last-child{border:0;padding-bottom:4px;font-weight:800;font-size:19px;color:#173d32}.summary-row:last-child strong{font-size:27px;color:#128456}
+.confirm-check{display:flex;align-items:flex-start;gap:11px;margin:18px 0;padding:12px;border:1px solid #e0ece7;border-radius:12px;background:#fff;font-size:15px;line-height:1.55;color:#36564e}
+.confirm-check input{appearance:none;width:22px;height:22px;flex:none;margin:1px 0 0;border:2px solid #9ab7aa;border-radius:6px;background:#fff;cursor:pointer;position:relative}
+.confirm-check input:checked{background:#16835c;border-color:#16835c}.confirm-check input:checked:after{content:"✓";position:absolute;inset:-1px;color:#fff;font-size:16px;font-weight:900;text-align:center;line-height:19px}
+.modal-actions{display:flex;gap:11px}.modal-actions button{flex:1}.cancel-btn{background:#edf1f4;color:#405365;border:1px solid #dce4e9}.confirm-btn{background:linear-gradient(110deg,#14664e,#269b70);color:#fff;box-shadow:0 8px 18px #187e582e}
+@media(max-width:640px){
+body{padding:12px 9px 25px;background-attachment:scroll}.card{padding:23px 15px 20px;border-radius:20px;margin:4px auto}
+h2{font-size:21px}h3{font-size:21px}h4{font-size:15px;margin:10px auto 17px;padding:6px 14px}
+.instructions{font-size:14px;line-height:1.65;padding:11px 12px 11px 31px;margin:15px 0 19px}
+.selection-grid,.fields-grid{grid-template-columns:1fr;gap:0}.field{padding:11px 12px;margin-bottom:11px;border-radius:13px;gap:6px}
+.field label{font-size:15px}.field input,.field select{min-height:48px;padding:11px 12px;font-size:17px}
+button{font-size:15px;min-height:49px;padding:12px 14px}.submit-btn{font-size:18px}.secondary{line-height:1.45}
+.modal{padding:20px 16px;border-radius:19px}.modal h3{font-size:21px}.summary-row{font-size:16px}.summary-row strong{font-size:19px}.summary-row:last-child strong{font-size:24px}.confirm-check{font-size:14px}.modal-actions{gap:8px}.modal-actions button{padding:11px 8px}
 }
+@media(min-width:641px) and (max-width:820px){.card{padding:28px 24px}.field{padding:12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
@@ -60,11 +71,14 @@ button:disabled{opacity:.55;cursor:not-allowed}
     <li>Submit કરતા પહેલાં કુલ સંખ્યા ચકાસવી જરૂરી છે.</li>
   </ul>
 
-  <div class="field"><label for="std">STD</label><select id="std"><option value="">પસંદ કરો</option></select></div>
-  <div class="field"><label for="class">CLASS</label><select id="class"><option value="">પહેલાં STD પસંદ કરો</option></select></div>
+  <div class="selection-grid">
+    <div class="field"><label for="std">ધોરણ (STD)</label><select id="std"><option value="">ધોરણ પસંદ કરો</option></select></div>
+    <div class="field"><label for="class">વર્ગ (CLASS)</label><select id="class"><option value="">પહેલાં STD પસંદ કરો</option></select></div>
+  </div>
 
   <button type="button" id="previousBtn" class="secondary" style="display:none">⬇️ પાછલા મહિના મુજબ માહિતી ઓટોમેટિક લાવવા અહી ક્લિક કરો.</button>
 
+  <div class="fields-grid">
   <div class="field"><label for="scb">SC કુમાર</label><input type="number" id="scb" min="0" step="1" inputmode="numeric"></div>
   <div class="field"><label for="scg">SC કન્યા</label><input type="number" id="scg" min="0" step="1" inputmode="numeric"></div>
   <div class="field"><label for="stb">ST કુમાર</label><input type="number" id="stb" min="0" step="1" inputmode="numeric"></div>
@@ -75,6 +89,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
   <div class="field"><label for="ming">MIN કન્યા</label><input type="number" id="ming" min="0" step="1" inputmode="numeric"></div>
   <div class="field"><label for="genb">GEN કુમાર</label><input type="number" id="genb" min="0" step="1" inputmode="numeric"></div>
   <div class="field"><label for="geng">GEN કન્યા</label><input type="number" id="geng" min="0" step="1" inputmode="numeric"></div>
+  </div>
 
   <div id="msg" class="msg"></div>
   <button type="button" class="submit-btn" id="submitBtn">✅ Submit</button>
