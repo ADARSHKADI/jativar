@@ -240,8 +240,11 @@ function refreshClassLabels() {
 async function loadStd() {
   showLoader(true, 'ધોરણની યાદી લોડ થઈ રહી છે...');
   try {
-    const [list, filled] = await Promise.all([api('std'), api('filled')]);
+    const [list, filled, firstSheetName] = await Promise.all([
+      api('std'), api('filled'), api('sheetname')
+    ]);
     filledMap = filled || {};
+    document.getElementById('monthTitle').textContent = firstSheetName;
     const s = document.getElementById('std');
     s.innerHTML = '<option value="">પસંદ કરો</option>';
     list.forEach(v => s.add(new Option(v, v)));
