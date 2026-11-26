@@ -64,7 +64,7 @@ button{font-size:15px;min-height:49px;padding:12px 14px}.submit-btn{font-size:18
 <div class="card">
   <h2>જાતિવાર વિદ્યાર્થી સંખ્યા એન્ટ્રી ફોર્મ</h2>
   <h3>પી.એમ.જી. ઠાકર આદર્શ હાઈસ્કૂલ, કડી</h3>
-  <h4 id="monthTitle">ચાલુ મહિનાની માહિતી</h4>
+  <h4 id="monthTitle">નવેમ્બર 2026 </h4>
   <ul class="instructions">
     <li>જે વર્ગની એન્ટ્રી થઈ ગયેલ હશે તેની સામે ✓ દેખાશે.</li>
     <li>બધા ખાનામાં માહિતી ભરવી ફરજિયાત છે.</li>
@@ -221,6 +221,13 @@ async function confirmAndSave() {
     showMsg('✅ માહિતી સફળતાપૂર્વક સેવ / અપડેટ થઈ ગઈ.', false);
     filledMap = await api('filled');
     refreshClassLabels();
+
+    // સફળતાપૂર્વક સેવ થયા પછી ફોર્મના બધા ફીલ્ડ ખાલી કરો.
+    document.getElementById('std').value = '';
+    const classSelect = document.getElementById('class');
+    classSelect.innerHTML = '<option value="">પહેલાં STD પસંદ કરો</option>';
+    clearBoxes();
+    document.getElementById('previousBtn').style.display = 'none';
   } catch (err) {
     showMsg('❌ ' + err.message, true);
   } finally {
